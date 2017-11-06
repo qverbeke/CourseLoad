@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>CourseLoad</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/stylesheets/style.css">
+  </head>
+  <body>
+	  <table>
+		  <tr>
+			  <td>
+				<form action="{{url_for('searchResults')}}" class="searchBar" method="post">
+					<input class="inputSize" type="text" id="query" name="query" placeholder="Search for courses..."> 
+					<input type = "submit" value = "SEARCH" class="searchButton"/>
+				</form>
+				</td>
+			</tr>
+		</table>
+	<table align="left" style="width:100%">
+      <tr>
+        <td class="filter_wrapper"style= "width:20% height:100%" valign="top">
+			<h3 class="filterTitles">Level of Difficulty</h3>
+			 <form action="">
+				<input type="checkbox" name="level" value="Beginner">Beginner<br>
+				<input type="checkbox" name="level" value="Intermediate">Intermediate<br>
+				<input type="checkbox" name="level" value="Advanced">Advanced<br>
+			<h3 class="filterTitles">Price Range</h3>
+			<div id="priceslide">
+				<input type="range" min="0" max="100" value="50" class="slider" id="myRange">
+				<h5 id="sliderVal">$26-$100</h5>
+				<script>
+					var slider = document.getElementById("myRange");
+					var output = document.getElementById("sliderVal");
+					slider.oninput = function(){
+						if(this.value==0){
+							output.innerHTML="Free";
+						}
+						else if(this.value>0&&this.value<=33){
+							output.innerHTML="$1-$25";
+						}
+						else if(this.value>33&&this.value<=66){
+							output.innerHTML="$26-$100";
+						}
+						else if(this.value>66&&this.value<100){
+							output.innerHTML="$101-$500";
+						}
+						else{
+							output.innerHTML="$500+";
+						}
+					} 
+				</script>
+			</div>
+			<h3 class="filterTitles">Course Duration</h3>
+			<div id="durationslide">
+				<input type="range" min="0" max="100" value="50" class="slider" id="myRange2">
+				<h5 id="sliderVal2">Days</h5>
+				<script>
+					var slider2 = document.getElementById("myRange2");
+					var output2 = document.getElementById("sliderVal2");
+					slider2.oninput = function(){
+						if(this.value<20){
+							output2.innerHTML="Minutes";
+						}
+						else if(this.value>=20&&this.value<40){
+							output2.innerHTML="Hours";
+						}
+						else if(this.value>=40&&this.value<60){
+							output2.innerHTML="Days";
+						}
+						else if(this.value>=60&&this.value<80){
+							output2.innerHTML="Weeks";
+						}
+						else if(this.value>=80&&this.value<=100){
+							output2.innerHTML="Months";
+						}
+					} 
+				</script>
+					<h3 class="filterTitles">Keywords</h3>
+				<input type="checkbox" name="keyword" value="HTML" >HTML<br>
+				<input type="checkbox" name="keyword" value="Beginner">Beginner<br>
+				<input type="checkbox" name="keyword" value="Tables">Table<br>
+			</div>
+			<button type="submit" class="refreshButton"><b>REFRESH</b></button>
+			</form> 
+        </td>
+        <td>
+			<div style="width:100%">
+				{% for elem in results_list%}
+				<div style="width:100%" class="resultsTable">
+					<table style="width:100%">
+						<tr class="text-wrapper" style="width:100%">
+							<td class="centerImage">
+								<a href="{{elem.link}}"><img src="static/images/{{elem.provider}}.png" alt="{{elem.provider}}" width="auto" height="150"></a>
+								<h3>{{ elem.company }}</h3>
+							</td>
+							<td style="width:66%">
+								<a href="{{elem.link}}">
+									<h1>{{ elem.courseName }}</h1>
+								</a>
+								<h4>{{elem.description}}</h4>
+
+							</td>
+						</tr>
+					</table>
+				</div>
+				{%endfor%}
+			</div>
+        </td>
+        
+
+	  </tr>
+    </table>
+  </body>
+
+</html>

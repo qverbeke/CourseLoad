@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>CourseLoad</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/stylesheets/style.css">
+  </head>
+
+  <body class="search">
+	<img class = "newappIcon" src="static/images/CourseLoadLogo.png">
+	<h1>Knowledge is Power.</h1>
+	<h2>CourseLoad is a powerful tool to search for online classes.</h2>
+          <form action="{{url_for('searchResults')}}" class="searchBar" method="post">
+			<input class="inputSize" type="text" id="query" name="query" placeholder="Search for courses..."> 
+			<input type = "submit" value = "SEARCH" class="searchButton"/>
+		  </form>
+  </body>
+
+</html>
