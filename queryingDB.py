@@ -83,7 +83,7 @@ def getCoursesByAttribute(attribute):
 
 
         result_collection = Result(myDatabase.all_docs, include_docs=True)
-        print ("Retrieved full document:\n{0}\n".format(result_collection[0]))
+        #print ("Retrieved full document:\n{0}\n".format(result_collection[0]))
 
         end_point = '{0}/{1}'.format(url, databaseName + "/_all_docs")
         params = {'include_docs': 'true'}
@@ -93,17 +93,18 @@ def getCoursesByAttribute(attribute):
         for i in range(0, 150):
                 tmp = result_collection[i][0]['doc']
                 if('keywords' in tmp):
-                        for dct in tmp['keywords']:
-							print json.dumps(tmp, indent=2)
-							if(attribute == dct["text"]):
-								resultz.append(tmp)
-								count+=1
+						dct=tmp['keywords']
+						for entry in dct:
+							if(attribute.lower() in entry["text"].lower()):
+									resultz.append(tmp)
+									count+=1
                 if (count == 5):
                         break
-                
                 time.sleep(.2)
         client.disconnect()
         return resultz
+
+        
 ##              
 ##user_name = "725dd567-163e-4a27-9e6e-0fe7ba0c2896-bluemix"
 ##password = "e71102d0e5605a5f8367d6bf4caad4758554207acaac646da972b5679e45e951"

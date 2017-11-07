@@ -88,7 +88,7 @@
         </td>
         <td>
 			<div style="width:100%">
-				{% for elem in results_list%}
+				{% for elem in resultslist%}
 				<div style="width:100%" class="resultsTable">
 					<table style="width:100%">
 						<tr class="text-wrapper" style="width:100%">
@@ -101,6 +101,7 @@
 									<h1>{{ elem.courseName }}</h1>
 								</a>
 								<h4>{{elem.description}}</h4>
+								<h5>{{elem.keywords}}</h5>
 
 							</td>
 						</tr>

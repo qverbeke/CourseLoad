@@ -21,7 +21,7 @@ companies={"codecademy":"Codecademy", "coursera":"Coursera","edx":"edX", "lynda"
 def getKeywordList(keywords):
 	result = ""
 	for i in keywords:
-		result+=(i+", ")
+		result+=(i["text"]+", ")
 	return result
 class query_correlation:
 	def __init__(self, provider, link, courseName, description, keywords):
@@ -32,22 +32,13 @@ class query_correlation:
 		self.description=description
 		self.keywords=getKeywordList(keywords)
 keywords_list=[]
-mcbq=[]
-mcbq.append(query_correlation("codecademy", "http://www.google.com","Java Information", "Description of java", {"Java":"cool", "Programming":"lame"}))
-mcbq.append(query_correlation("coursera", "http://www.google.com","Learning Java", "This is the course description", {"Coding":"cool", "Learning":"lame"}))
-mcbq.append(query_correlation("edx", "http://www.google.com","Java course for beginners", "Describe java course", {"Java":"cool", "Coding":"lame"}))
-mcbq.append(query_correlation("mit", "http://www.google.com","An introduction to java", "Java Description", {"Coding in Java":"cool", "Java":"lame"}))
-mcbq.append(query_correlation("openculture", "http://www.google.com","Java Basics", "The basics of java: a description", {"Java coding":"cool", "google":"lame"}))
-
-"""
 def parse_dict(query):
-	result_dict=getCoursesByAttribute(query)
-	print result_dict
+	result_dicts=getCoursesByAttribute(query)
 	result_ary=[]
-	for i in result_dict:
-		result_ary.append(query_correlation(str(i["provider"]), str(i["link"]), str(i["courseName"]), str(i["description"])))
+	for result_dict in result_dicts:
+		result_ary.append(query_correlation(result_dict["provider"], result_dict["link"], result_dict["courseName"], result_dict["description"], result_dict["keywords"]))
 	return result_ary
-"""
+
 @app.route('/')
 def Welcome():
 	return render_template('index.html', a = 0)
@@ -55,7 +46,8 @@ def Welcome():
 @app.route('/searchresults', methods=['POST'])
 def searchResults():	
 	query=request.form['query']
-	return render_template('searchresults.html', results_list=mcbq)
+	mcbq=parse_dict(query)
+	return render_template('searchresults.html', resultslist=mcbq)
 
 port = os.getenv('PORT', '5000')
 if __name__ == "__main__":
