@@ -82,25 +82,21 @@ def getCoursesByAttribute(attribute):
                 print("Successfully created a database {}".format(databaseName))
 
 
-        result_collection = Result(myDatabase.all_docs, include_docs=True)
+        result_collection = list(Result(myDatabase.all_docs, include_docs=True))
         #print ("Retrieved full document:\n{0}\n".format(result_collection[0]))
-
         end_point = '{0}/{1}'.format(url, databaseName + "/_all_docs")
         params = {'include_docs': 'true'}
         response = client.r_session.get(end_point, params=params)
         resultz = []
         count = 0
-        for i in range(0, 150):
-                tmp = result_collection[i][0]['doc']
+        for i in range(0, len(result_collection)):
+                tmp = result_collection[i]['doc']
                 if('keywords' in tmp):
-						dct=tmp['keywords']
-						for entry in dct:
-							if(attribute.lower() in entry["text"].lower()):
-									resultz.append(tmp)
-									count+=1
-                if (count == 5):
-                        break
-                time.sleep(.2)
+                        dct=tmp['keywords']
+                        for entry in dct:
+                                if(attribute.lower() in entry["text"].lower()):
+                                        resultz.append(tmp)
+                                        count+=1
         client.disconnect()
         return resultz
 
