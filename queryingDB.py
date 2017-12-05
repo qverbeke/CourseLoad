@@ -6,7 +6,7 @@ from cloudant.result import Result, ResultByKey
 
 from watson_developer_cloud import NaturalLanguageUnderstandingV1
 import watson_developer_cloud.natural_language_understanding.features.v1 as Features
-
+from random import shuffle
 
 import json
 import os
@@ -98,7 +98,8 @@ def getCoursesByAttribute(attribute):
                                         resultz.append(tmp)
                                         count+=1
         client.disconnect()
-        return resultz
+        shuffle(resultz)
+        return resultz[0:5]
 
         
 ##              
